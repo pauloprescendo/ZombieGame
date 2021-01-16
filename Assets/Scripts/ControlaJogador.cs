@@ -9,6 +9,7 @@ public class ControlaJogador : MonoBehaviour
     public LayerMask MascaraChao;
     public GameObject TextoGameOver;
     public int Vida = 100;
+    public ControlaInterface scriptControlaInterface;
 
     private Vector3 direcao;
     private Rigidbody ridigbodyJogador;
@@ -66,6 +67,7 @@ public class ControlaJogador : MonoBehaviour
     public void TomarDano(int dano)
     {
         Vida -= dano;
+        scriptControlaInterface.AtualizarSliderVidaJogador();
         if (Vida <= 0)
         {
             Time.timeScale = 0;
