@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2318789792406035673}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -25.076, y: 1.981, z: -23.3671}
-  m_LocalScale: {x: 0.066726, y: 0.066726, z: 0.066726}
+  m_LocalScale: {x: 0.06, y: 0.06, z: 0.21}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Velocidade: 20
+  SomDeMorte: {fileID: 8300000, guid: a8e0805497b5c22498c864742f3bad02, type: 3}
 --- !u!54 &-6753273543149342091
 Rigidbody:
   m_ObjectHideFlags: 0
