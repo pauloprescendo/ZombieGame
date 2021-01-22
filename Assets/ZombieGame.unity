@@ -2453,10 +2453,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 478182457, guid: 4b3bb44effa49480d8d18049684cc33a, type: 3}
-      propertyPath: SomDeDano
-      value: 
-      objectReference: {fileID: 8300000, guid: d770ae545d5087a42a096e46d8f58a6a, type: 3}
-    - target: {fileID: 478182457, guid: 4b3bb44effa49480d8d18049684cc33a, type: 3}
       propertyPath: TextoGameOver
       value: 
       objectReference: {fileID: 1004598167}
@@ -2512,10 +2508,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8540498970731900269, guid: 4b3bb44effa49480d8d18049684cc33a, type: 3}
-      propertyPath: SomDetiro
-      value: 
-      objectReference: {fileID: 8300000, guid: 216b66e2d1206134dab2d836056b9f6e, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b3bb44effa49480d8d18049684cc33a, type: 3}
 --- !u!4 &520614229 stripped

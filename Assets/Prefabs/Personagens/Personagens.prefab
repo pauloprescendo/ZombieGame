@@ -2530,6 +2530,9 @@ GameObject:
   - component: {fileID: 478182456}
   - component: {fileID: 478182457}
   - component: {fileID: 8540498970731900269}
+  - component: {fileID: 2851802969826840438}
+  - component: {fileID: 7132535182662357248}
+  - component: {fileID: 478182464}
   m_Layer: 0
   m_Name: Personagens
   m_TagString: Jogador
@@ -2636,12 +2639,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac2a3f183e5166d4290a8f12bb7d1307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidade: 10
   MascaraChao:
     serializedVersion: 2
     m_Bits: 256
   TextoGameOver: {fileID: 0}
-  Vivo: 1
+  scriptControlaInterface: {fileID: 0}
+  SomDeDano: {fileID: 8300000, guid: d770ae545d5087a42a096e46d8f58a6a, type: 3}
+  statusJogador: {fileID: 0}
 --- !u!114 &8540498970731900269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2656,6 +2660,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bala: {fileID: 2318789792406035673, guid: 4eec6f71b0ed58248a427db04fa93738, type: 3}
   CanoDaArma: {fileID: 295583051}
+  SomDetiro: {fileID: 8300000, guid: 216b66e2d1206134dab2d836056b9f6e, type: 3}
+--- !u!114 &2851802969826840438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884102019447498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a6a32bba304f9745afb988aefc7ec00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7132535182662357248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884102019447498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de2c7da31630dc848abb841f86219c5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &478182464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884102019447498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68580c6b2f361664da69e31f751a9850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Vida: 0
+  VidaInicial: 100
+  Valocidade: 10
 --- !u!1 &1938851689004064
 GameObject:
   m_ObjectHideFlags: 0
@@ -2962,6 +3006,10 @@ PrefabInstance:
       value: Pistola
       objectReference: {fileID: 0}
     - target: {fileID: 4588127840092072, guid: b5a75d52478f3443e853501f64dbae36, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4588127840092072, guid: b5a75d52478f3443e853501f64dbae36, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -2974,6 +3022,10 @@ PrefabInstance:
       value: 0.142
       objectReference: {fileID: 0}
     - target: {fileID: 4588127840092072, guid: b5a75d52478f3443e853501f64dbae36, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4588127840092072, guid: b5a75d52478f3443e853501f64dbae36, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.5
       objectReference: {fileID: 0}
@@ -2984,14 +3036,6 @@ PrefabInstance:
     - target: {fileID: 4588127840092072, guid: b5a75d52478f3443e853501f64dbae36, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4588127840092072, guid: b5a75d52478f3443e853501f64dbae36, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4588127840092072, guid: b5a75d52478f3443e853501f64dbae36, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4588127840092072, guid: b5a75d52478f3443e853501f64dbae36, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
