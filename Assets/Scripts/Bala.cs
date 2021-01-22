@@ -7,6 +7,8 @@ public class Bala : MonoBehaviour
     public float Velocidade = 20;
     public AudioClip SomDeMorte;
 
+    private int danoDoTiro = 1;
+
     private Rigidbody rigidbodyBala;
 
     void Start()
@@ -23,7 +25,7 @@ public class Bala : MonoBehaviour
     {
         if (objetoDeColisao.tag == "Inimigo")
         {
-            objetoDeColisao.GetComponent<ControlaInimigo>().TomarDano(1);
+            objetoDeColisao.GetComponent<ControlaInimigo>().TomarDano(danoDoTiro);
         }
 
         Destroy(gameObject);
