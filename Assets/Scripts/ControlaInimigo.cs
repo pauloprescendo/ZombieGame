@@ -10,6 +10,10 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
     private MovimentoPersonagem movimentaInimigo;
     private AnimacaoPersonagem animacaoInimigo;
     private Status statusInimigo;
+    private Vector3 posicaoAleatoria;
+    private Vector3 direcao;
+    private float contadorVagar;
+    private float tempoEntrePosicoesAleatorias = 4;
 
     // Start is called before the first frame update
     void Start()
@@ -24,12 +28,16 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
     void FixedUpdate()
     {
         float distancia = Vector3.Distance(transform.position, Jogador.transform.position);
-
-        Vector3 direcao = Jogador.transform.position - transform.position;
         movimentaInimigo.Rotacionar(direcao);
+        animacaoInimigo.Movimentar(direcao.magnitude);
 
-        if (distancia > 2.5)
+        if(distancia > 15)
         {
+            Vagar();
+        }
+        else if(distancia > 2.5)
+        {
+            direcao = Jogador.transform.position - transform.position;
             movimentaInimigo.Movimentar(direcao, statusInimigo.Valocidade);
             animacaoInimigo.Atacar(false);
         }
@@ -37,6 +45,32 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
         {
             animacaoInimigo.Atacar(true);
         }
+    }
+
+    void Vagar()
+    {
+        contadorVagar -= Time.deltaTime;
+        if(contadorVagar <= 0)
+        {
+            posicaoAleatoria = AleatorizarPosicao();
+            contadorVagar += tempoEntrePosicoesAleatorias;
+        }
+
+        bool ficouPertoOSuficiente = Vector3.Distance(transform.position, posicaoAleatoria) <= 0.05;
+        if(!ficouPertoOSuficiente)
+        {
+            direcao = posicaoAleatoria - transform.position;
+            movimentaInimigo.Movimentar(direcao, statusInimigo.Valocidade);
+        }
+    }
+
+    Vector3 AleatorizarPosicao()
+    {
+        Vector3 posicao = Random.insideUnitSphere * 10;
+        posicao += transform.position;
+        posicao.y = transform.position.y;
+
+        return posicao;
     }
 
     void AtacaJogador()
