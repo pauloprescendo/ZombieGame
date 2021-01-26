@@ -6598,6 +6598,7 @@ MonoBehaviour:
   SliderVidaJogador: {fileID: 1094146696}
   PainelGameOver: {fileID: 644175004}
   TextoTempoDeSobrevivencia: {fileID: 940837686}
+  TextoPontuacaoMaxima: {fileID: 622251600}
 --- !u!1001 &1181094031
 PrefabInstance:
   m_ObjectHideFlags: 0

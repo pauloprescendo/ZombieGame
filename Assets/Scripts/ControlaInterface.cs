@@ -53,8 +53,8 @@ public class ControlaInterface : MonoBehaviour
 
         if(TextoPontuacaoMaxima.text == "")
         {
-            min = (int)Time.timeSinceLevelLoad / 60;
-            seg = (int)Time.timeSinceLevelLoad % 60;
+            min = (int)tempoPontuacaoSalva / 60;
+            seg = (int)tempoPontuacaoSalva % 60;
             TextoPontuacaoMaxima.text = string.Format("Seu melhor tempo é {0}min e {1}s", min, seg);
         }
     }
