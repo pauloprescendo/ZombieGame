@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GeradorZumbis : MonoBehaviour
 {
-    public GameObject Zombi;
+    public GameObject Zumbi;
     public float TempoGerarZumbi = 1;
     public LayerMask LayerZumbi;
 
@@ -12,16 +12,26 @@ public class GeradorZumbis : MonoBehaviour
     private float distanciaDeGeracao = 3;
     private float distanciaDoJogadorParaGeracao = 20;
     private GameObject jogador;
+    private int quantidadeMaximaDeZumbisVivos = 2;
+    private int quantidadeDeZumbisVivos;
+    private float tempoProximoAumentoDeDificuldade = 30;
+    private float contadorDeAumentarDificuldade;
 
     void Start()
     {
         jogador = GameObject.FindWithTag(Tags.Jogador);
+        contadorDeAumentarDificuldade = tempoProximoAumentoDeDificuldade;
+        for (int i = 0; i < quantidadeMaximaDeZumbisVivos; i++)
+        {
+            StartCoroutine(GerarNovoZumbi());
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Vector3.Distance(transform.position, jogador.transform.position) > distanciaDoJogadorParaGeracao)
+        bool possoGerarZumbisPelaDistancia = Vector3.Distance(transform.position, jogador.transform.position) > distanciaDoJogadorParaGeracao;
+        if (possoGerarZumbisPelaDistancia == true && quantidadeDeZumbisVivos < quantidadeMaximaDeZumbisVivos)
         {
             contadorTempo += Time.deltaTime;
 
@@ -30,6 +40,12 @@ public class GeradorZumbis : MonoBehaviour
                 StartCoroutine(GerarNovoZumbi());
                 contadorTempo = 0;
             }
+        }
+
+        if (Time.timeSinceLevelLoad > contadorDeAumentarDificuldade)
+        {
+            quantidadeMaximaDeZumbisVivos++;
+            contadorDeAumentarDificuldade = Time.timeSinceLevelLoad + tempoProximoAumentoDeDificuldade;
         }
     }
 
@@ -50,7 +66,9 @@ public class GeradorZumbis : MonoBehaviour
             colisores = Physics.OverlapSphere(posicaoDeCriacao, 1, LayerZumbi);
             yield return null;
         }
-        Instantiate(Zombi, transform.position, transform.rotation);
+        ControlaInimigo zumbi = Instantiate(Zumbi, transform.position, transform.rotation).GetComponent<ControlaInimigo>();
+        zumbi.meuGerador = this;
+        quantidadeDeZumbisVivos++;
     }
 
     Vector3 AleatorizarPosicao()
@@ -60,5 +78,10 @@ public class GeradorZumbis : MonoBehaviour
         posicao.y = 0;
 
         return posicao;
+    }
+
+    public void DiminuirQuantidadeDeZumbisVivos()
+    {
+        quantidadeDeZumbisVivos--;
     }
 }

@@ -11,9 +11,11 @@ public class ControlaInterface : MonoBehaviour
     public GameObject PainelGameOver;
     public Text TextoTempoDeSobrevivencia;
     public Text TextoPontuacaoMaxima;
+    public Text TextoQuantidadeDeZumbisMortos;
 
     private ControlaJogador scriptControlaJogador;
     private float tempoPontuacaoSalva;
+    private int quantidadeDeZumbisMortos;
 
     // Start is called before the first frame update
     void Start()
@@ -62,5 +64,11 @@ public class ControlaInterface : MonoBehaviour
     public void Reiniciar()
     {
         SceneManager.LoadScene("ZombieGame");
+    }
+
+    public void AtualizarQuantidadeDeZumbisMortos()
+    {
+        quantidadeDeZumbisMortos++;
+        TextoQuantidadeDeZumbisMortos.text = string.Format("x {0}", quantidadeDeZumbisMortos);
     }
 }

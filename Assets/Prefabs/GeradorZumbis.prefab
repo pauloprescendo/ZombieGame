@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c64af76ad0e533a469b201c8b453c011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Zombi: {fileID: 1063500868937916, guid: 35861510587b7489780fe86970823679, type: 3}
+  Zumbi: {fileID: 1063500868937916, guid: 35861510587b7489780fe86970823679, type: 3}
   TempoGerarZumbi: 1
   LayerZumbi:
     serializedVersion: 2
