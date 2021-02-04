@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ControlaJogador : MonoBehaviour, IMatavel
+public class ControlaJogador : MonoBehaviour, IMatavel, ICuravel
 {
     public LayerMask MascaraChao;
     public GameObject TextoGameOver;
@@ -52,5 +52,15 @@ public class ControlaJogador : MonoBehaviour, IMatavel
     public void Morrer()
     {
         scriptControlaInterface.GameOver();
+    }
+
+    public void CurarVida(int quantidadeDeCura)
+    {
+        statusJogador.Vida += quantidadeDeCura;
+        if (statusJogador.Vida > statusJogador.VidaInicial)
+        {
+            statusJogador.Vida = statusJogador.VidaInicial;
+        }
+        scriptControlaInterface.AtualizarSliderVidaJogador();
     }
 }

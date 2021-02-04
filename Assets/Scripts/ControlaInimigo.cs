@@ -6,6 +6,7 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
 {
     public GameObject Jogador;
     public AudioClip SomDeMorte;
+    public GameObject KitMedicoPrefab;
 
     private MovimentoPersonagem movimentaInimigo;
     private AnimacaoPersonagem animacaoInimigo;
@@ -14,6 +15,7 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
     private Vector3 direcao;
     private float contadorVagar;
     private float tempoEntrePosicoesAleatorias = 4;
+    private float porcentagemGerarKitMedico = 0.1f;
 
     // Start is called before the first frame update
     void Start()
@@ -99,5 +101,14 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
     {
         Destroy(gameObject);
         ControlaAudio.instancia.PlayOneShot(SomDeMorte);
+        VerificarGeracaoKitMedico(porcentagemGerarKitMedico);
+    }
+
+    public void VerificarGeracaoKitMedico(float porcentagemGeracao)
+    {
+        if (Random.value <= porcentagemGeracao)
+        {
+            Instantiate(KitMedicoPrefab, transform.position, Quaternion.identity);
+        }
     }
 }
