@@ -23,9 +23,15 @@ public class Bala : MonoBehaviour
 
     void OnTriggerEnter(Collider objetoDeColisao)
     {
-        if (objetoDeColisao.tag == "Inimigo")
+        Debug.Log("Objeto de Colisao: " + objetoDeColisao.tag);
+        switch (objetoDeColisao.tag)
         {
-            objetoDeColisao.GetComponent<ControlaInimigo>().TomarDano(danoDoTiro);
+            case Tags.Inimigo:
+                objetoDeColisao.GetComponent<ControlaInimigo>().TomarDano(danoDoTiro);
+                break;
+            case Tags.ChefeDeFase:
+                objetoDeColisao.GetComponent<ControlaChefe>().TomarDano(danoDoTiro);
+                break;
         }
 
         Destroy(gameObject);

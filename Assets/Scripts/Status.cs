@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Status : MonoBehaviour
 {
-    [HideInInspector]
+    // [HideInInspector]
     public int Vida;
 
     public int VidaInicial = 100;
