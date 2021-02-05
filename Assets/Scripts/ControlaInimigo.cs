@@ -9,6 +9,7 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
     public GameObject KitMedicoPrefab;
     [HideInInspector]
     public GeradorZumbis meuGerador;
+    public GameObject ParticulaSangueZumbi;
 
     private MovimentoPersonagem movimentaInimigo;
     private AnimacaoPersonagem animacaoInimigo;
@@ -99,6 +100,11 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
         {
             Morrer();
         }
+    }
+
+    public void ParticulaSangue(Vector3 posicao, Quaternion rotacao)
+    {
+        Instantiate(ParticulaSangueZumbi, posicao, rotacao);
     }
 
     public void Morrer()
