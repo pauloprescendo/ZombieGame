@@ -5,26 +5,44 @@ using UnityEngine;
 public class GeradorChefe : MonoBehaviour
 {
     public GameObject ChefePrefab;
+    public Transform[] PosicoesPossiveisDeGeracao;
 
     private float tempoParaProximaGeracao = 0;
     private float tempoEntreGeracoes = 5;
     private ControlaInterface scriptControlaInterface;
+    private Transform jogador;
 
-    // Start is called before the first frame update
     void Start()
     {
         tempoParaProximaGeracao = tempoEntreGeracoes;
         scriptControlaInterface = GameObject.FindObjectOfType(typeof(ControlaInterface)) as ControlaInterface;
+        jogador = GameObject.FindWithTag(Tags.Jogador).transform;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Time.timeSinceLevelLoad > tempoParaProximaGeracao)
         {
-            Instantiate(ChefePrefab, transform.position, Quaternion.identity);
+            Vector3 posicaoDeCriacao = CalcularPosicaoMaisDistanteDoJogador();
+            Instantiate(ChefePrefab, posicaoDeCriacao, Quaternion.identity);
             scriptControlaInterface.AparecerTextoChefeCriado();
             tempoParaProximaGeracao = Time.timeSinceLevelLoad + tempoEntreGeracoes;
         }
+    }
+
+    public Vector3 CalcularPosicaoMaisDistanteDoJogador()
+    {
+        Vector3 posicaoDeMaiorDistancia = Vector3.zero;
+        float maiorDistancia = 0;
+        foreach (Transform posicao in PosicoesPossiveisDeGeracao)
+        {
+            float distanciaEntreOJogador = Vector3.Distance(posicao.position, jogador.position);
+            if (distanciaEntreOJogador > maiorDistancia)
+            {
+                maiorDistancia = distanciaEntreOJogador;
+                posicaoDeMaiorDistancia = posicao.position;
+            }
+        }
+        return posicaoDeMaiorDistancia;
     }
 }
