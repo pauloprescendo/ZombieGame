@@ -2788,6 +2788,10 @@ PrefabInstance:
       propertyPath: scriptControlaInterface
       value: 
       objectReference: {fileID: 1177937559}
+    - target: {fileID: 478182464, guid: 4b3bb44effa49480d8d18049684cc33a, type: 3}
+      propertyPath: Velocidade
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1884102019447498, guid: 4b3bb44effa49480d8d18049684cc33a, type: 3}
       propertyPath: m_Name
       value: Jogador

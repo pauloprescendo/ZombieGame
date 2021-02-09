@@ -23,7 +23,7 @@ public class ControlaChefe : MonoBehaviour, IMatavel
         jogador = GameObject.FindWithTag(Tags.Jogador).transform;
         agente = GetComponent<NavMeshAgent>();
         statusChefe = GetComponent<Status>();
-        agente.speed = statusChefe.Valocidade;
+        agente.speed = statusChefe.Velocidade;
         animacaoChefe = GetComponent<AnimacaoPersonagem>();
         movimentoChefe = GetComponent<MovimentoPersonagem>();
         sliderVidaChefe.maxValue = statusChefe.VidaInicial;

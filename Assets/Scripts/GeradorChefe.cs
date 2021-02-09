@@ -8,7 +8,7 @@ public class GeradorChefe : MonoBehaviour
     public Transform[] PosicoesPossiveisDeGeracao;
 
     private float tempoParaProximaGeracao = 0;
-    private float tempoEntreGeracoes = 5;
+    private float tempoEntreGeracoes = 60;
     private ControlaInterface scriptControlaInterface;
     private Transform jogador;
 
