@@ -14,8 +14,11 @@ public class MovimentoJogador : MovimentoPersonagem
 
     public void RotacaoJogador()
     {
-        Vector3 posicaoMiraJogador = this.Direcao;
-        posicaoMiraJogador.y = transform.position.y;
-        Rotacionar(posicaoMiraJogador);
+        if (this.Direcao != Vector3.zero)
+        {
+            Vector3 posicaoMiraJogador = this.Direcao;
+            posicaoMiraJogador.y = transform.position.y;
+            Rotacionar(posicaoMiraJogador);
+        }
     }
 }
