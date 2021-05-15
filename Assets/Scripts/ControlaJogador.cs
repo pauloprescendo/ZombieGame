@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ControlaJogador : MonoBehaviour, IMatavel, ICuravel
 {
-    public LayerMask MascaraChao;
+    // public LayerMask MascaraChao;
     public GameObject TextoGameOver;
     public ControlaInterface scriptControlaInterface;
     public AudioClip SomDeDano;
@@ -23,18 +23,13 @@ public class ControlaJogador : MonoBehaviour, IMatavel, ICuravel
 
     void Update()
     {
-        float eixoX = Input.GetAxis("Horizontal");
-        float eixoZ = Input.GetAxis("Vertical");
-
-        direcao = new Vector3(eixoX, 0, eixoZ);
-
-        animacaoJogador.Movimentar(direcao.magnitude);
+        animacaoJogador.Movimentar(this.meuMovimentoJogador.Direcao.magnitude);
     }
 
     void FixedUpdate()
     {
-        meuMovimentoJogador.Movimentar(direcao, statusJogador.Velocidade);
-        meuMovimentoJogador.RotacaoJogador(MascaraChao);
+        meuMovimentoJogador.Movimentar(statusJogador.Velocidade);
+        meuMovimentoJogador.RotacaoJogador();
     }
 
     public void TomarDano(int dano)

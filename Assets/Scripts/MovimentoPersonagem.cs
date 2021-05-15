@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MovimentoPersonagem : MonoBehaviour
 {
+    public Vector3 Direcao { get; protected set; }
+
     private Rigidbody meuRigidbody;
 
     void Awake()
@@ -11,15 +13,28 @@ public class MovimentoPersonagem : MonoBehaviour
         meuRigidbody = GetComponent<Rigidbody>();
     }
 
-    public void Movimentar(Vector3 direcao, float velocidade)
+    public void SetDirecao(Vector2 direcao)
     {
-        meuRigidbody.MovePosition(meuRigidbody.position + direcao.normalized * velocidade * Time.deltaTime);
+        this.Direcao = new Vector3(direcao.x, 0, direcao.y);
+    }
+
+    public void SetDirecao(Vector3 direcao)
+    {
+        this.Direcao = direcao;
+    }
+
+    public void Movimentar(float velocidade)
+    {
+        meuRigidbody.MovePosition(meuRigidbody.position + Direcao * velocidade * Time.deltaTime);
     }
 
     public void Rotacionar(Vector3 direcao)
     {
-        Quaternion novaRotacao = Quaternion.LookRotation(direcao);
-        meuRigidbody.MoveRotation(novaRotacao);
+        if (direcao != Vector3.zero)
+        {
+            Quaternion novaRotacao = Quaternion.LookRotation(direcao);
+            meuRigidbody.MoveRotation(novaRotacao);
+        }
     }
 
     public void Morrer()

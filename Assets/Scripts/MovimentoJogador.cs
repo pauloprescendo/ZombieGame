@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class MovimentoJogador : MovimentoPersonagem
 {
-    public void RotacaoJogador(LayerMask MascaraChao)
+    [SerializeField]
+    private AudioSource audio;
+
+    public void AudioPasso()
     {
-        Ray raio = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(raio.origin, raio.direction * 100, Color.red);
+        audio.Play();
+    }
 
-        RaycastHit impacto;
-        if (Physics.Raycast(raio, out impacto, 100, MascaraChao))
-        {
-            Vector3 posicaoMiraJogador = impacto.point - transform.position;
-            posicaoMiraJogador.y = transform.position.y;
-
-            Rotacionar(posicaoMiraJogador);
-        }
+    public void RotacaoJogador()
+    {
+        Vector3 posicaoMiraJogador = this.Direcao;
+        posicaoMiraJogador.y = transform.position.y;
+        Rotacionar(posicaoMiraJogador);
     }
 }
