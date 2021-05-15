@@ -9,12 +9,16 @@ public class ControlaArma : MonoBehaviour
     public GameObject CanoDaArma;
     public AudioClip SomDetiro;
 
-    void Update()
+    private void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        var toquesNaTela = Input.touches;
+        foreach (var toque in toquesNaTela)
         {
-            this.Atirar();
-            ControlaAudio.instancia.PlayOneShot(SomDetiro);
+            if (toque.phase == TouchPhase.Began)
+            {
+                this.Atirar();
+                ControlaAudio.instancia.PlayOneShot(SomDetiro);
+            }
         }
     }
 
