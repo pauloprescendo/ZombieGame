@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GeradorZumbis : MonoBehaviour
 {
-    public GameObject Zumbi;
+    [SerializeField]
+    private ReservaFixa reserva;
     public float TempoGerarZumbi = 1;
     public LayerMask LayerZumbi;
 
@@ -12,8 +13,6 @@ public class GeradorZumbis : MonoBehaviour
     private float distanciaDeGeracao = 3;
     private float distanciaDoJogadorParaGeracao = 20;
     private GameObject jogador;
-    private int quantidadeMaximaDeZumbisVivos = 2;
-    private int quantidadeDeZumbisVivos;
     private float tempoProximoAumentoDeDificuldade = 30;
     private float contadorDeAumentarDificuldade;
 
@@ -21,17 +20,13 @@ public class GeradorZumbis : MonoBehaviour
     {
         jogador = GameObject.FindWithTag(Tags.Jogador);
         contadorDeAumentarDificuldade = tempoProximoAumentoDeDificuldade;
-        for (int i = 0; i < quantidadeMaximaDeZumbisVivos; i++)
-        {
-            StartCoroutine(GerarNovoZumbi());
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
         bool possoGerarZumbisPelaDistancia = Vector3.Distance(transform.position, jogador.transform.position) > distanciaDoJogadorParaGeracao;
-        if (possoGerarZumbisPelaDistancia == true && quantidadeDeZumbisVivos < quantidadeMaximaDeZumbisVivos)
+        if (possoGerarZumbisPelaDistancia)
         {
             contadorTempo += Time.deltaTime;
 
@@ -44,7 +39,6 @@ public class GeradorZumbis : MonoBehaviour
 
         if (Time.timeSinceLevelLoad > contadorDeAumentarDificuldade)
         {
-            quantidadeMaximaDeZumbisVivos++;
             contadorDeAumentarDificuldade = Time.timeSinceLevelLoad + tempoProximoAumentoDeDificuldade;
         }
     }
@@ -66,9 +60,13 @@ public class GeradorZumbis : MonoBehaviour
             colisores = Physics.OverlapSphere(posicaoDeCriacao, 1, LayerZumbi);
             yield return null;
         }
-        ControlaInimigo zumbi = Instantiate(Zumbi, transform.position, transform.rotation).GetComponent<ControlaInimigo>();
-        zumbi.meuGerador = this;
-        quantidadeDeZumbisVivos++;
+        if (this.reserva.TemObjeto())
+        {
+            GameObject zumbi = this.reserva.PegarObjeto();
+            zumbi.transform.position = posicaoDeCriacao;
+            var controleZumbi = zumbi.GetComponent<ControlaInimigo>();
+            controleZumbi.meuGerador = this;
+        }
     }
 
     Vector3 AleatorizarPosicao()
@@ -78,10 +76,5 @@ public class GeradorZumbis : MonoBehaviour
         posicao.y = 0;
 
         return posicao;
-    }
-
-    public void DiminuirQuantidadeDeZumbisVivos()
-    {
-        quantidadeDeZumbisVivos--;
     }
 }

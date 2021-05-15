@@ -1,26 +1,30 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ControlaArma : MonoBehaviour
 {
-    public GameObject Bala;
+    public ReservaExtensivel reservaDeBalas;
     public GameObject CanoDaArma;
     public AudioClip SomDetiro;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Instantiate(Bala, CanoDaArma.transform.position, CanoDaArma.transform.rotation);
+            this.Atirar();
             ControlaAudio.instancia.PlayOneShot(SomDetiro);
+        }
+    }
+
+    private void Atirar()
+    {
+        if (this.reservaDeBalas.TemObjeto())
+        {
+            var bala = this.reservaDeBalas.PegarObjeto();
+            bala.transform.position = CanoDaArma.transform.position;
+            bala.transform.rotation = CanoDaArma.transform.rotation;
         }
     }
 }

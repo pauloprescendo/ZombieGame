@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ControlaInimigo : MonoBehaviour, IMatavel
+public class ControlaInimigo : MonoBehaviour, IMatavel, IReservavel
 {
     public GameObject Jogador;
     public AudioClip SomDeMorte;
@@ -20,13 +20,23 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
     private float tempoEntrePosicoesAleatorias = 4;
     private float porcentagemGerarKitMedico = 0.1f;
     private ControlaInterface scriptControlaInterface;
+    private IReservaDeObjetos reserva;
 
-    // Start is called before the first frame update
+    public void SetReserva(IReservaDeObjetos reserva)
+    {
+        this.reserva = reserva;
+    }
+
+    private void Awake()
+    {
+        animacaoInimigo = GetComponent<AnimacaoPersonagem>();
+        movimentaInimigo = GetComponent<MovimentoPersonagem>();
+    }
+
     void Start()
     {
         Jogador = GameObject.FindWithTag(Tags.Jogador);
-        animacaoInimigo = GetComponent<AnimacaoPersonagem>();
-        movimentaInimigo = GetComponent<MovimentoPersonagem>();
+
         statusInimigo = GetComponent<Status>();
         AleatorizarZumbi();
         scriptControlaInterface = GameObject.FindObjectOfType(typeof(ControlaInterface)) as ControlaInterface;
@@ -38,11 +48,11 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
         movimentaInimigo.Rotacionar(direcao);
         animacaoInimigo.Movimentar(direcao.magnitude);
 
-        if(distancia > 15)
+        if (distancia > 15)
         {
             Vagar();
         }
-        else if(distancia > 2.5)
+        else if (distancia > 2.5)
         {
             direcao = Jogador.transform.position - transform.position;
             movimentaInimigo.SetDirecao(direcao);
@@ -59,14 +69,14 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
     void Vagar()
     {
         contadorVagar -= Time.deltaTime;
-        if(contadorVagar <= 0)
+        if (contadorVagar <= 0)
         {
             posicaoAleatoria = AleatorizarPosicao();
             contadorVagar += tempoEntrePosicoesAleatorias + Random.Range(-1f, 1f);
         }
 
         bool ficouPertoOSuficiente = Vector3.Distance(transform.position, posicaoAleatoria) <= 0.05;
-        if(!ficouPertoOSuficiente)
+        if (!ficouPertoOSuficiente)
         {
             direcao = posicaoAleatoria - transform.position;
             movimentaInimigo.SetDirecao(direcao);
@@ -95,10 +105,15 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
         transform.GetChild(geraTipoZombi).gameObject.SetActive(true);
     }
 
+    private void VoltarParaReserva()
+    {
+        this.reserva.DevolverObjeto(this.gameObject);
+    }
+
     public void TomarDano(int dano)
     {
         statusInimigo.Vida -= dano;
-        if(statusInimigo.Vida <= 0)
+        if (statusInimigo.Vida <= 0)
         {
             Morrer();
         }
@@ -111,14 +126,13 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
 
     public void Morrer()
     {
-        Destroy(gameObject, 2);
+        Invoke("VoltarParaReserva", 2);
         animacaoInimigo.Morrer();
         movimentaInimigo.Morrer();
         this.enabled = false;
         ControlaAudio.instancia.PlayOneShot(SomDeMorte);
         VerificarGeracaoKitMedico(porcentagemGerarKitMedico);
         scriptControlaInterface.AtualizarQuantidadeDeZumbisMortos();
-        meuGerador.DiminuirQuantidadeDeZumbisVivos();
     }
 
     public void VerificarGeracaoKitMedico(float porcentagemGeracao)
@@ -127,5 +141,17 @@ public class ControlaInimigo : MonoBehaviour, IMatavel
         {
             Instantiate(KitMedicoPrefab, transform.position, Quaternion.identity);
         }
+    }
+
+    public void AoEntrarNaReserva()
+    {
+        this.movimentaInimigo.Reiniciar();
+        this.enabled = true;
+        this.gameObject.SetActive(false);
+    }
+
+    public void AoSairDaReserva()
+    {
+        this.gameObject.SetActive(true);
     }
 }

@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class GeradorChefe : MonoBehaviour
 {
-    public GameObject ChefePrefab;
     public Transform[] PosicoesPossiveisDeGeracao;
-
+    public ReservaFixa reserva;
+    public float tempoEntreGeracoes = 60;
     private float tempoParaProximaGeracao = 0;
-    private float tempoEntreGeracoes = 60;
     private ControlaInterface scriptControlaInterface;
     private Transform jogador;
 
@@ -23,10 +22,15 @@ public class GeradorChefe : MonoBehaviour
     {
         if (Time.timeSinceLevelLoad > tempoParaProximaGeracao)
         {
-            Vector3 posicaoDeCriacao = CalcularPosicaoMaisDistanteDoJogador();
-            Instantiate(ChefePrefab, posicaoDeCriacao, Quaternion.identity);
-            scriptControlaInterface.AparecerTextoChefeCriado();
-            tempoParaProximaGeracao = Time.timeSinceLevelLoad + tempoEntreGeracoes;
+            if (this.reserva.TemObjeto())
+            {
+                Vector3 posicaoDeCriacao = CalcularPosicaoMaisDistanteDoJogador();
+                var chefe = this.reserva.PegarObjeto();
+                var controleChefe = chefe.GetComponent<ControlaChefe>();
+                controleChefe.SetPosicao(posicaoDeCriacao);
+                scriptControlaInterface.AparecerTextoChefeCriado();
+                tempoParaProximaGeracao = Time.timeSinceLevelLoad + tempoEntreGeracoes;
+            }
         }
     }
 

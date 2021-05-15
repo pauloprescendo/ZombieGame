@@ -20,7 +20,7 @@ public class MovimentoPersonagem : MonoBehaviour
 
     public void SetDirecao(Vector3 direcao)
     {
-        this.Direcao = direcao;
+        this.Direcao = direcao.normalized;
     }
 
     public void Movimentar(float velocidade)
@@ -43,6 +43,12 @@ public class MovimentoPersonagem : MonoBehaviour
         meuRigidbody.velocity = Vector3.zero;
         meuRigidbody.isKinematic = false;
         GetComponent<Collider>().enabled = false;
+    }
+
+    public void Reiniciar()
+    {
+        meuRigidbody.isKinematic = true;
+        GetComponent<Collider>().enabled = true;
     }
 
 }

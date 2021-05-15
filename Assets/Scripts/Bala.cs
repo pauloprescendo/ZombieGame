@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bala : MonoBehaviour
+public class Bala : MonoBehaviour, IReservavel
 {
     public float Velocidade = 20;
     public AudioClip SomDeMorte;
@@ -10,6 +10,12 @@ public class Bala : MonoBehaviour
     private int danoDoTiro = 1;
 
     private Rigidbody rigidbodyBala;
+    private IReservaDeObjetos reserva;
+
+    public void SetReserva(IReservaDeObjetos reserva)
+    {
+        this.reserva = reserva;
+    }
 
     void Start()
     {
@@ -39,5 +45,15 @@ public class Bala : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    public void AoEntrarNaReserva()
+    {
+        this.gameObject.SetActive(false);
+    }
+
+    public void AoSairDaReserva()
+    {
+        this.gameObject.SetActive(true);
     }
 }

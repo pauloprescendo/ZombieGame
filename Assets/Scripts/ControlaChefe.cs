@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class ControlaChefe : MonoBehaviour, IMatavel
+public class ControlaChefe : MonoBehaviour, IMatavel, IReservavel
 {
     public GameObject KitMedicoPrefab;
     public Slider sliderVidaChefe;
@@ -17,17 +17,28 @@ public class ControlaChefe : MonoBehaviour, IMatavel
     private Status statusChefe;
     private AnimacaoPersonagem animacaoChefe;
     private MovimentoPersonagem movimentoChefe;
+    private IReservaDeObjetos reserva;
+
+    private void Awake()
+    {
+        animacaoChefe = GetComponent<AnimacaoPersonagem>();
+        movimentoChefe = GetComponent<MovimentoPersonagem>();
+        agente = GetComponent<NavMeshAgent>();
+        statusChefe = GetComponent<Status>();
+    }
 
     private void Start()
     {
         jogador = GameObject.FindWithTag(Tags.Jogador).transform;
-        agente = GetComponent<NavMeshAgent>();
-        statusChefe = GetComponent<Status>();
         agente.speed = statusChefe.Velocidade;
-        animacaoChefe = GetComponent<AnimacaoPersonagem>();
-        movimentoChefe = GetComponent<MovimentoPersonagem>();
         sliderVidaChefe.maxValue = statusChefe.VidaInicial;
         AtualizarInterface();
+    }
+
+    public void SetPosicao(Vector3 posicao)
+    {
+        this.transform.position = posicao;
+        this.agente.Warp(posicao);
     }
 
     private void Update()
@@ -80,7 +91,12 @@ public class ControlaChefe : MonoBehaviour, IMatavel
         this.enabled = false;
         agente.enabled = false;
         Instantiate(KitMedicoPrefab, transform.position, Quaternion.identity);
-        Destroy(gameObject, 2);
+        Invoke("VoltarParaReserva", 2);
+    }
+
+    private void VoltarParaReserva()
+    {
+        this.reserva.DevolverObjeto(this.gameObject);
     }
 
     public void AtualizarInterface()
@@ -89,5 +105,24 @@ public class ControlaChefe : MonoBehaviour, IMatavel
         float porcentagemDaVida = (float)statusChefe.Vida / statusChefe.VidaInicial;
         Color corDaVida = Color.Lerp(CorDaVidaMinima, CorDaVidaMaxima, porcentagemDaVida);
         ImagemSlider.color = corDaVida;
+    }
+
+    public void SetReserva(IReservaDeObjetos reserva)
+    {
+        this.reserva = reserva;
+    }
+
+    public void AoEntrarNaReserva()
+    {
+        this.gameObject.SetActive(false);
+        this.movimentoChefe.Reiniciar();
+        this.enabled = true;
+        agente.enabled = true;
+        statusChefe.Vida = statusChefe.VidaInicial;
+    }
+
+    public void AoSairDaReserva()
+    {
+        this.gameObject.SetActive(true);
     }
 }
